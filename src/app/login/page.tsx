@@ -3,8 +3,13 @@ import styles from "./login.module.scss";
 import logo from '@/assets/images/logo.svg';
 import Hero from '@/assets/images/hero.png';
 import Image from 'next/image';
+import { useState } from "react";
 
 export default function LoginPage() {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+
   return (
     <main className={styles.login}>
       <section className={styles.leftPane}>
@@ -30,17 +35,28 @@ export default function LoginPage() {
 
           <form>
             <div className={styles.inputGroup}>
-              <label htmlFor="email">Email</label>
               <input type="email" id="email" placeholder="Email" />
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="password">Password</label>
-              <div className={styles.passwordField}>
-                <input type="password" id="password" placeholder="Password" />
-                <span className={styles.show}>SHOW</span>
-              </div>
-            </div>
+                <div className={styles.passwordField}>
+                    <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    placeholder="Password"
+                    aria-label="Password"
+                    />
+                    <button
+                    type="button"
+                    className={styles.showBtn}
+                    onClick={togglePasswordVisibility}
+                    aria-pressed={showPassword}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                    {showPassword ? "HIDE" : "SHOW"}
+                    </button>
+                </div>
+                </div>
 
             <a href="#" className={styles.forgot}>
               FORGOT PASSWORD?

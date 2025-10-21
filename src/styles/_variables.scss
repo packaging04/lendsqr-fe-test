@@ -9,4 +9,5 @@ $breakpoint-md: 768px;
 $breakpoint-lg: 1024px;
 
 // Fonts
-$font-family: "Work Sans", sans-serif;
+$font-family: var(--font-avenir-next), sans-serif;
+
