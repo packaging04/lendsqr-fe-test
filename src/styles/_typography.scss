@@ -1,0 +1,12 @@
+@use './variables' as *;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 700;
+  color: $heading-color;
+}
+
+p, label, input, button {
+  font-family: "Work Sans", sans-serif;
+  color: $text-color;
+}

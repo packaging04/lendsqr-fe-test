@@ -1,3 +1,7 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins";
+@use "../styles/typography";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
