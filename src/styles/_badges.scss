@@ -1,0 +1,12 @@
+@use './variables' as *;
+
+.badge {
+  display: inline-flex;
+  padding: .25rem .5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: .75rem;
+  &.active { background: #E6FBF7; color: #22C55E; }
+  &.pending { background: #FFF8E6; color: #F59E0B; }
+  &.blacklisted { background: #FFF0F6; color: #F43F5E; }
+}

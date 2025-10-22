@@ -1,0 +1,120 @@
+.sidebar {
+  background: #fff;
+  border-right: 1px solid #e0e0e0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  transition: width 0.3s ease;
+  
+
+  @media (max-width: 768px) {
+    width: 70px;
+  }
+}
+
+.logo {
+  padding: 0 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  width: 283px;
+  gap: 7.5px;
+}
+
+
+
+.sectionLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #545f7d;
+  margin: 1rem 2rem 0.5rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #545f7d;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.75rem 1.875rem;
+  opacity: 0.6;
+  font-family: var(--font-work-sans);
+  cursor: pointer;
+  position: relative;
+  transition: 
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease,
+    opacity 0.25s ease;
+
+  &:hover {
+    background-color: rgba(57, 205, 204, 0.1);
+    color: #213f7d;
+    opacity: 1;
+    transform: translateX(4px); /* slightly slide to the right on mouse over*/
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease;
+  }
+
+  &:hover .icon {
+    transform: scale(1.1); /* this is to make d icon pop a bit */
+  }
+
+  .dropdownIcon {
+    opacity: 0.9;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  &:hover .dropdownIcon {
+    opacity: 1;
+    transform: rotate(180deg); /* rotating d arrow for dropdown on mous over */
+  }
+}
+
+
+.navItem:first-child {
+  opacity: 1;
+}
+
+.word {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.topMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;   /* no space-between */
+  gap: 24px;                     /* creates even spacing between navItems */
+  width: 100%;
+}
+
+.active {
+  color: #213f7d;
+  background-color: rgba(57, 205, 204, 0.08);
+  font-weight: 400;
+  font-size: 16px;
+  opacity: 1;
+  transform: translateX(4px);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #39cdcc;
+  }
+}

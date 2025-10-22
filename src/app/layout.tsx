@@ -34,6 +34,27 @@ const avenirNext = localFont({
   variable: "--font-avenir-next",
 });
 
+const workSans = localFont({
+  src: [
+    {
+      path: "../assets/fonts/WorkSans-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/WorkSans-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/WorkSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-work-sans",
+});
+
 export const metadata: Metadata = {
   title: "Lendsqr Test App",
   description: "Demo app for Lendsqr dashboard",
@@ -47,7 +68,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${avenirNext.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${avenirNext.variable} ${workSans.variable}`}
     >
       <body className="font-avenir">{children}</body>
     </html>

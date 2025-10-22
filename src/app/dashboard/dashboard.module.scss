@@ -1,0 +1,21 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9fafc;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background: #f9fafc;
+}
+
