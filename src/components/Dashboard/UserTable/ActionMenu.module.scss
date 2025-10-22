@@ -1,0 +1,94 @@
+.menu {
+  position: absolute;
+  top: 120%; /* below the 3 dots */
+  right: 0;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  min-width: 160px;
+  animation: fadeIn 0.15s ease-out;
+  font-family: var(--font-work-sans);
+  overflow: hidden; 
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    height: 40px;
+    font-size: 14px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #213f7d;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease, border-radius 0.15s ease;
+    font-family: var(--font-work-sans);
+
+    &:hover {
+      background: #f5f7fa;
+    }
+
+    svg {
+      color: #999;
+    }
+
+    &:first-child:hover {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    &:last-child:hover {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+  .detail {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-work-sans);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .menu {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    margin: 0;
+    padding-bottom: 1rem;
+    animation: slideUp 0.25s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .item {
+    justify-content: center;
+    font-size: 1rem;
+  }
+}

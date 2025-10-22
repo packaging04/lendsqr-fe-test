@@ -1,0 +1,156 @@
+@use "@/styles/variables" as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+
+.panel {
+  background: #fff;
+  width: 280px;
+  max-height: 95vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  padding: 1rem 1.25rem;
+  margin: 1rem;
+  animation: slideIn 0.3s ease forwards;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #213f7d;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  label {
+    font-size: 0.875rem;
+    color: #545f7d;
+    margin-bottom: 0.4rem;
+  }
+
+  input,
+  select {
+    border: 1px solid #dcdfe3;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    outline: none;
+    color: #213f7d;
+    width: 100%;
+    background: #fff;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      border-color: #39cdcc;
+    }
+
+    &::placeholder {
+      color: #b0b0b0;
+    }
+  }
+}
+
+.selectWrapper,
+.dateWrapper {
+  position: relative;
+
+  .icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #545f7d;
+    pointer-events: none;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+
+  button {
+    flex: 1;
+    padding: 0.5rem 0;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .resetBtn {
+    border: 1px solid #dcdfe3;
+    background: #fff;
+    color: #213f7d;
+    margin-right: 0.75rem;
+
+    &:hover {
+      background: #f5f7fa;
+    }
+  }
+
+  .filterBtn {
+    background: #39cdcc;
+    border: none;
+    color: #fff;
+
+    &:hover {
+      background: #2fb6b4;
+    }
+  }
+}
+
+.detail {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-work-sans);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .panel {
+    width: 90%;
+    margin: 0 auto;
+    animation: slideUp 0.3s ease forwards;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
