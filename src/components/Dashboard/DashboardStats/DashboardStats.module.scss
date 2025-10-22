@@ -1,0 +1,19 @@
+.dashboardStats {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 2.2rem 1.3rem 0;
+  font-family: var(--font-work-sans);
+
+  .title {
+    color: #213f7d;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .cardsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

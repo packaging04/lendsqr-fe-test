@@ -30,15 +30,16 @@ export default function Header({ onMenuClick }: HeaderProps) {
         <a href="#" className={styles.docs}>
           Docs
         </a>
-        <div className={styles.profile}>
-          <img
-            src="/avatar.jpg"
-            alt="User avatar"
-            className={styles.avatar}
-            width={32}
-            height={32}
-          />
-          <span className={styles.username}>Adedeji</span>
+       
+       <div className={styles.notificationProfile}>
+          <button className={styles.notificationBtn} aria-label="Notifications">
+            <Image src="/icons/bell.png" alt="Notification Logo" width={21} height={24} />
+          </button>
+          <div className={styles.profile}>
+            <Image src="/icons/avatar.png" alt="Avatar" width={48} height={48} />
+            <span className={styles.username}>Adedeji</span>
+            <Image src="/icons/dropdown.png" alt="Drop down Logo" className={styles.dropdownIcon} width={20} height={20} />
+          </div>
         </div>
       </div>
     </header>

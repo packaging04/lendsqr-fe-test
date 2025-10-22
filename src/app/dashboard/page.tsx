@@ -1,3 +1,10 @@
+import DashboardStats from "@/components/Dashboard/DashboardStats/DashboardStats";
+
 export default function DashboardPage() {
-  return <h1>Dashboard Page</h1>;
+  return (
+    <main>
+      <DashboardStats />
+      {/* Table will go here next */}
+    </main>
+  );
 }

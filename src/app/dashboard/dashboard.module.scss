@@ -4,7 +4,7 @@
 .dashboard {
   display: flex;
   min-height: 100vh;
-  background-color: #f9fafc;
+  background-color: #fbfbfb;
 }
 
 .main {
@@ -14,8 +14,7 @@
 
 .content {
   flex: 1;
-  padding: 2rem;
   overflow-y: auto;
-  background: #f9fafc;
+  background: #fbfbfb;
 }
 

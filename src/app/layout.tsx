@@ -55,6 +55,27 @@ const workSans = localFont({
   variable: "--font-work-sans",
 });
 
+const roboto = localFont({
+  src: [
+    {
+      path: "../assets/fonts/Roboto-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/Roboto-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/WorkSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-roboto",
+});
+
 export const metadata: Metadata = {
   title: "Lendsqr Test App",
   description: "Demo app for Lendsqr dashboard",
@@ -68,7 +89,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${avenirNext.variable} ${workSans.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${avenirNext.variable} ${workSans.variable} ${roboto.variable}`}
     >
       <body className="font-avenir">{children}</body>
     </html>
