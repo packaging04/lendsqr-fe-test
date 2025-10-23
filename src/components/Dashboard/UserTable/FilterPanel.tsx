@@ -1,6 +1,7 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./FilterPanel.module.scss";
-import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
 export type Filters = {
@@ -13,19 +14,21 @@ export type Filters = {
 };
 
 interface FilterPanelProps {
+  anchor: HTMLElement | null;                   // <-- actual anchor element
   onClose: () => void;
   onApply: (filters: Filters) => void;
   onReset: () => void;
   organizations: string[];
-  anchorRef: React.RefObject<HTMLButtonElement | null>;
+  column?: string | null;
 }
 
 export default function FilterPanel({
+  anchor,
   onClose,
   onApply,
   onReset,
   organizations,
-  anchorRef,
+  column,
 }: FilterPanelProps) {
   const [filters, setFilters] = useState<Filters>({
     organization: "",
@@ -36,14 +39,55 @@ export default function FilterPanel({
     status: "",
   });
 
-  const [open, setOpen] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
+  const [openOrgList, setOpenOrgList] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  // compute & set position when anchor changes or on scroll/resize
+  useEffect(() => {
+  const update = () => {
+    if (!anchor || !panelRef.current) return;
+    const rect = anchor.getBoundingClientRect();
+    const panelWidth = panelRef.current.offsetWidth;
+
+    // Center the panel horizontally under the button
+    const left = Math.max(
+        8,
+        Math.min(
+            rect.left + window.scrollX + rect.width / 2 - panelWidth / 2,
+            window.innerWidth - panelWidth - 8
+        ));
+    const top = rect.bottom + window.scrollY + 8; // 8px gap
+
+    setPos({ top, left });
+  };
+
+  update();
+  window.addEventListener("resize", update);
+  window.addEventListener("scroll", update, true);
+
+  return () => {
+    window.removeEventListener("resize", update);
+    window.removeEventListener("scroll", update, true);
+  };
+}, [anchor]);
+
+
+  // click outside to close
+  useEffect(() => {
+    function handle(e: MouseEvent) {
+      const tgt = e.target as Node;
+      if (panelRef.current && !panelRef.current.contains(tgt) && !anchor?.contains(tgt)) {
+        onClose();
+      }
+    }
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
+  }, [onClose, anchor]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
+    setFilters((p) => ({ ...p, [name]: value }));
   };
 
   const handleApply = () => {
@@ -52,43 +96,20 @@ export default function FilterPanel({
   };
 
   const handleSelectOrg = (org: string) => {
-    setFilters((prev) => ({ ...prev, organization: org }));
-    setOpen(false);
+    setFilters((p) => ({ ...p, organization: org }));
+    setOpenOrgList(false);
   };
 
-  // Close when clicking outside
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        panelRef.current &&
-        !panelRef.current.contains(e.target as Node) &&
-        !anchorRef.current?.contains(e.target as Node)
-      ) {
-        onClose();
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [onClose, anchorRef]);
+  // If no anchor (safety) - don't render
+  if (!anchor) return null;
 
-  // Position below the button
-  const [position, setPosition] = useState({ top: 0, left: 0 });
-
-  useEffect(() => {
-    if (anchorRef.current) {
-      const rect = anchorRef.current.getBoundingClientRect();
-      setPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX,
-      });
-    }
-  }, [anchorRef]);
-
-  return (
+  const panel = (
     <div
       ref={panelRef}
       className={styles.panelPopover}
-      style={{ top: position.top, left: position.left }}
+      style={{ top: pos.top, left: pos.left }}
+      role="dialog"
+      aria-label="Filter users"
     >
       <h4 className={styles.title}>Filter Users</h4>
 
@@ -100,16 +121,13 @@ export default function FilterPanel({
             <button
               type="button"
               className={styles.selectButton}
-              onClick={() => setOpen((prev) => !prev)}
+              onClick={() => setOpenOrgList((s) => !s)}
             >
               {filters.organization || "Select organization"}
-              <ChevronDown
-                size={16}
-                className={`${styles.icon} ${open ? styles.rotate : ""}`}
-              />
+              <ChevronDown size={16} className={`${styles.icon} ${openOrgList ? styles.rotate : ""}`} />
             </button>
 
-            {open && (
+            {openOrgList && (
               <ul className={styles.dropdownList}>
                 {[...new Set(organizations)]
                   .filter(Boolean)
@@ -128,59 +146,32 @@ export default function FilterPanel({
       {/* Username */}
       <div className={styles.formGroup}>
         <label className={styles.detail}>Username</label>
-        <input
-          type="text"
-          name="username"
-          value={filters.username}
-          onChange={handleChange}
-          placeholder="User"
-        />
+        <input name="username" value={filters.username} onChange={handleChange} placeholder="User" />
       </div>
 
       {/* Email */}
       <div className={styles.formGroup}>
         <label className={styles.detail}>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={filters.email}
-          onChange={handleChange}
-          placeholder="Email"
-        />
+        <input name="email" value={filters.email} onChange={handleChange} placeholder="Email" />
       </div>
 
       {/* Date */}
       <div className={styles.formGroup}>
         <label className={styles.detail}>Date</label>
-        <input
-          type="date"
-          name="date"
-          value={filters.date}
-          onChange={handleChange}
-        />
+        <input type="date" name="date" value={filters.date} onChange={handleChange} />
       </div>
 
       {/* Phone */}
       <div className={styles.formGroup}>
         <label className={styles.detail}>Phone Number</label>
-        <input
-          type="text"
-          name="phone"
-          value={filters.phone}
-          onChange={handleChange}
-          placeholder="Phone Number"
-        />
+        <input name="phone" value={filters.phone} onChange={handleChange} placeholder="Phone Number" />
       </div>
 
       {/* Status */}
       <div className={styles.formGroup}>
         <label className={styles.detail}>Status</label>
         <div className={styles.selectWrapper}>
-          <select
-            name="status"
-            value={filters.status}
-            onChange={handleChange}
-          >
+          <select name="status" value={filters.status} onChange={handleChange}>
             <option value="">Select</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
@@ -190,28 +181,23 @@ export default function FilterPanel({
         </div>
       </div>
 
-      {/* Buttons */}
       <div className={styles.actions}>
         <button
           onClick={() => {
-            setFilters({
-              organization: "",
-              username: "",
-              email: "",
-              date: "",
-              phone: "",
-              status: "",
-            });
+            setFilters({ organization: "", username: "", email: "", date: "", phone: "", status: "" });
             onReset();
           }}
           className={styles.resetBtn}
         >
           Reset
         </button>
+
         <button onClick={handleApply} className={styles.filterBtn}>
           Filter
         </button>
       </div>
     </div>
   );
+
+  return createPortal(panel, document.body);
 }

@@ -36,6 +36,20 @@ export default function UserTable() {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<DOMRect | null>(null);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [filterAnchor, setFilterAnchor] = useState<HTMLElement | null>(null);
+  const [filterColumn, setFilterColumn] = useState<string | null>(null);
+
+    const openFilter = (anchor: HTMLElement | null, column?: string) => {
+    setFilterAnchor(anchor);
+    setFilterColumn(column ?? null);
+    setShowFilter(true);
+    };
+
+  const closeFilter = () => {
+    setFilterAnchor(null);
+    setFilterColumn(null);
+    setShowFilter(false);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(e.target.value));
@@ -232,16 +246,32 @@ export default function UserTable() {
                         ? "Date Joined"
                         : key.charAt(0).toUpperCase() + key.slice(1)}
 
-                    <button ref={filterButtonRef} onClick={() => setShowFilter(true)}>
+                    <button
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            // e.currentTarget is the button element — pass it as anchor
+                            openFilter(e.currentTarget as HTMLElement, key);
+                        }}
+                        aria-label={`Open filter for ${key}`}
+                         style={{
+                                background: "none",
+                                border: "none",
+                                padding: 0,
+                                margin: 0,
+                                cursor: "pointer",
+                                outline: "none",
+                            }}
+                    >
                       <Image
                         src="/icons/filter.png"
                         alt=""
                         width={16}
                         height={16}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setShowFilter(true);
-                        }}
+                        // onClick={(e) => {
+                        //   e.stopPropagation();
+                        //   setShowFilter(true);
+                        // }}
                       />
                       </button>
                     </div>
@@ -279,21 +309,15 @@ export default function UserTable() {
               )}
             </tbody>
           </table>
-          {/* {showFilter && (
-            <FilterPanel
-              organizations={[...new Set(users.map((u) => u.organization))]}
-              onClose={() => setShowFilter(false)}
-              onApply={handleApplyFilters}
-              onReset={handleResetFilters}
-            />
-          )} */}
+         
           {showFilter && (
             <FilterPanel
-                anchorRef={filterButtonRef}
-                onClose={() => setShowFilter(false)}
+                anchor={filterAnchor}
+                onClose={closeFilter}
                 onApply={handleApplyFilters}
                 onReset={handleResetFilters}
-                organizations={users.map((u) => u.organization)}
+                organizations={users.map(u => u.organization)} // or users variable
+                column={filterColumn}
             />
             )}
           {/* footer */}
