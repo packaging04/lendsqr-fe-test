@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import clsx from "clsx";
-import logo from "@/assets/images/logo.svg";
 import styles from "./Sidebar.module.scss";
 
 type SidebarProps = {
@@ -181,9 +180,6 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       className={clsx(styles.sidebar, isOpen && styles.open)}
       aria-label="Sidebar"
     >
-      <div className={styles.logo}>
-        <Image src={logo} alt="Lendsqr logo" width={140} height={40} />
-      </div>
       
 
       <nav>

@@ -3,13 +3,18 @@
 
 .dashboard {
   display: flex;
-  min-height: 100vh;
+  flex-direction: column;
   background-color: #fbfbfb;
-  overflow-x: hidden;  
-  overflow-y: visible; 
-  align-items: stretch;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
+.body {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  background: #fbfbfb;
+}
 
 .main {
   flex: 1;

@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import styles from "./Header.module.scss";
+import logo from "@/assets/images/logo.svg";
 
 type HeaderProps = {
   onMenuClick?: () => void;
@@ -10,6 +11,9 @@ export default function Header({ onMenuClick }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.left}>
+        <div className={styles.logo}>
+        <Image src={logo} alt="Lendsqr logo" width={140} height={40} />
+      </div>
         <button
           className={styles.menuBtn}
           onClick={onMenuClick}

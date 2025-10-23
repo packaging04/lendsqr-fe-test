@@ -13,9 +13,12 @@ export default function DashboardLayout({
 
   return (
     <div className={styles.dashboard}>
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-      <div className={styles.main}>
-        <Header onMenuClick={() => setIsSidebarOpen((prev) => !prev)} />
+      <Header onMenuClick={() => setIsSidebarOpen((prev) => !prev)} />
+      <div className={styles.body}>
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+        />
         <main className={styles.content}>{children}</main>
       </div>
     </div>
