@@ -6,7 +6,6 @@
     vertical-align: middle;
     font-size: 14px;
     color: #213f7d;
-    border-bottom: 1px solid #e6efff;
     white-space: nowrap;
   }
 }
@@ -49,4 +48,12 @@
 .moreWrapper {
   position: relative;
   display: inline-block;
+}
+.truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
 }

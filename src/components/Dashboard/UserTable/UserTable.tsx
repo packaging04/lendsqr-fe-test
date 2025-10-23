@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import styles from "./UserTable.module.scss";
 import TableRow from "./TableRow";
 import Image from "next/image";
 import FilterPanel from "./FilterPanel";
 import clsx from "clsx";
+import { useUsers } from "@/hooks/useUsers";
 
 /** Type for user rows */
 export type User = {
@@ -17,20 +18,6 @@ export type User = {
   status: string; // Active | Inactive | Pending | Blacklisted
 };
 
-/** Mock data — replace with API call later */
-const MOCK_USERS: User[] = new Array(12).fill(0).map((_, i) => {
-  const statuses = ["Active", "Inactive", "Pending", "Blacklisted"];
-  const s = statuses[i % statuses.length];
-  return {
-    id: String(i + 1),
-    organization: i % 2 ? "Lendstar" : "Lendsqr",
-    username: ["Adedeji", "Debby Ogana", "Grace Effiom", "Tosin Dokunmu"][i % 4],
-    email: ["adedeji@lendsqr.com", "debby@irorun.com", "grace@lendstar.com", "tosin@lendsqr.com"][i % 4],
-    phone: "070" + String(6000000 + i),
-    dateJoined: i % 2 ? "Apr 30, 2020 10:00 AM" : "May 15, 2020 10:00 AM",
-    status: s,
-  };
-});
 
 type Filters = {
   organization: string;
@@ -42,9 +29,9 @@ type Filters = {
 };
 
 export default function UserTable() {
+  const { users, loading, error, refresh } = useUsers();
   // UI state
-  const [data, setData] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const filterButtonRef = useRef<HTMLButtonElement>(null);
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<DOMRect | null>(null);
@@ -53,6 +40,7 @@ export default function UserTable() {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(e.target.value));
     setIsSelectOpen(false);
+    setPage(1);
   };
 
   const handleClick = () => {
@@ -77,21 +65,9 @@ export default function UserTable() {
   const [sortBy, setSortBy] = useState<keyof User | null>(null);
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   
-
-  useEffect(() => {
-    setLoading(true);
-    const t = setTimeout(() => {
-      setData(MOCK_USERS);
-      setLoading(false);
-    }, 450);
-    return () => clearTimeout(t);
-  }, []);
-
-  /** Filter + sort results */
    const filtered = useMemo(() => {
-    let src = data.slice();
+    let src = users.slice();
 
-    // Search
     const q = search.trim().toLowerCase();
     if (q) {
       src = src.filter(
@@ -103,18 +79,29 @@ export default function UserTable() {
       );
     }
 
-    // Filtering logic
     src = src.filter((u) => {
-      if (filters.organization && u.organization !== filters.organization) return false;
-      if (filters.username && !u.username.toLowerCase().includes(filters.username.toLowerCase())) return false;
-      if (filters.email && !u.email.toLowerCase().includes(filters.email.toLowerCase())) return false;
+      if (filters.organization && u.organization !== filters.organization)
+        return false;
+      if (
+        filters.username &&
+        !u.username.toLowerCase().includes(filters.username.toLowerCase())
+      )
+        return false;
+      if (
+        filters.email &&
+        !u.email.toLowerCase().includes(filters.email.toLowerCase())
+      )
+        return false;
       if (filters.phone && !u.phone.includes(filters.phone)) return false;
       if (filters.status && u.status !== filters.status) return false;
-      if (filters.date && !u.dateJoined.toLowerCase().includes(filters.date.toLowerCase())) return false;
+      if (
+        filters.date &&
+        !u.dateJoined.toLowerCase().includes(filters.date.toLowerCase())
+      )
+        return false;
       return true;
     });
 
-    // Sort
     if (sortBy) {
       src.sort((a, b) => {
         const valA = String(a[sortBy] ?? "").toLowerCase();
@@ -126,7 +113,8 @@ export default function UserTable() {
     }
 
     return src;
-  }, [data, search, sortBy, sortDir, filters]);
+  }, [users, search, filters, sortBy, sortDir]);
+  
 
   /** Pagination logic */
   const total = filtered.length;
@@ -165,10 +153,10 @@ export default function UserTable() {
     setMenuAnchor(anchor?.getBoundingClientRect() || null);
     };
 
-const handleCloseMenu = () => {
-  setOpenMenuId(null);
-  setMenuAnchor(null);
-};
+    const handleCloseMenu = () => {
+    setOpenMenuId(null);
+    setMenuAnchor(null);
+    };
 
   const toggleSort = (key: keyof User) => {
     if (sortBy === key) {
@@ -185,12 +173,42 @@ const handleCloseMenu = () => {
     return sortDir === "asc" ? "ascending" : "descending";
   };
 
+    if (loading) {
+        return (
+            <div className={styles.tableCard}>
+            <table className={styles.table}>
+                <thead>
+                <tr>
+                    <th>Organization</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Date Joined</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {Array.from({ length: 10 }).map((_, i) => (
+                    <tr key={i} className={styles.skeletonRow}>
+                    {Array.from({ length: 7 }).map((_, j) => (
+                        <td key={j}>
+                        <div className={styles.skeletonLine}></div>
+                        </td>
+                    ))}
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            </div>
+        );
+    }
+
+
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <section className={styles.container} aria-labelledby="users-heading">
-      <div className={styles.headerRow}>
-        <h3 id="users-heading">Users</h3>
-      </div>
-
       <div className={styles.tableWrap}>
         <div className={styles.tableCard}>
           <table className={styles.table} role="table">
@@ -213,6 +231,8 @@ const handleCloseMenu = () => {
                       {key === "dateJoined"
                         ? "Date Joined"
                         : key.charAt(0).toUpperCase() + key.slice(1)}
+
+                    <button ref={filterButtonRef} onClick={() => setShowFilter(true)}>
                       <Image
                         src="/icons/filter.png"
                         alt=""
@@ -223,6 +243,7 @@ const handleCloseMenu = () => {
                           setShowFilter(true);
                         }}
                       />
+                      </button>
                     </div>
                   </th>
                 ))}
@@ -258,15 +279,23 @@ const handleCloseMenu = () => {
               )}
             </tbody>
           </table>
-
-          {showFilter && (
+          {/* {showFilter && (
             <FilterPanel
+              organizations={[...new Set(users.map((u) => u.organization))]}
               onClose={() => setShowFilter(false)}
               onApply={handleApplyFilters}
               onReset={handleResetFilters}
             />
-          )}
-
+          )} */}
+          {showFilter && (
+            <FilterPanel
+                anchorRef={filterButtonRef}
+                onClose={() => setShowFilter(false)}
+                onApply={handleApplyFilters}
+                onReset={handleResetFilters}
+                organizations={users.map((u) => u.organization)}
+            />
+            )}
           {/* footer */}
           <div className={styles.tableFooter}>
                 <div className={styles.leftFooter}>
@@ -347,8 +376,7 @@ const handleCloseMenu = () => {
                 </div>
 
 
-            </div>
-
+          </div>
         </div>
       </div>
     </section>

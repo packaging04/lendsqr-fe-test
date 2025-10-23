@@ -5,16 +5,25 @@
   display: flex;
   min-height: 100vh;
   background-color: #fbfbfb;
+  overflow-x: hidden;  
+  overflow-y: visible; 
+  align-items: stretch;
 }
+
 
 .main {
   flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: #fbfbfb;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 
 .content {
   flex: 1;
   overflow-y: auto;
   background: #fbfbfb;
+  overflow: visible;
 }
-

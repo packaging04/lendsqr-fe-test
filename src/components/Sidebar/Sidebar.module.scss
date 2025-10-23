@@ -1,15 +1,44 @@
 .sidebar {
   background: #fff;
-  border-right: 1px solid #e0e0e0;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 1.5rem 0;
-  transition: width 0.3s ease;
-  
+  width: 283px;
+  height: auto;
+  align-self: stretch;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative; /* to make z-index work */
+  z-index: 10; 
+  flex-shrink: 0; 
+  border-right: none;
+  box-shadow: 0px 5px 20px 0px #0000000A;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0px 5px 20px 0px #0000000A;
+  }
+  scrollbar-width: thin;
+  scrollbar-color: #cfd8dc transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cfd8dc;
+    border-radius: 10px;
+    border-right: none;
+  }
 
   @media (max-width: 768px) {
-    width: 70px;
+    position: fixed;
+    z-index: 50;
+    height: 100%;
+    box-shadow: 0px 5px 20px 0px #0000000A;
   }
 }
 

@@ -38,7 +38,9 @@ export default function TableRow({ user, isMenuOpen, onOpenMenu, onCloseMenu }: 
     <tr className={styles.row}>
       <td>{user.organization}</td>
       <td>{user.username}</td>
-      <td>{user.email}</td>
+      <td title={user.email} className={styles.truncate}>
+        {user.email}
+    </td>
       <td>{user.phone}</td>
       <td>{user.dateJoined}</td>
       <td>

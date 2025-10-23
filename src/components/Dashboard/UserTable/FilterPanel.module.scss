@@ -23,6 +23,42 @@
   animation: slideIn 0.3s ease forwards;
 }
 
+.customSelect {
+  position: relative;
+  button {
+    height: 36px;
+    width: 100%;
+    text-align: left;
+    padding: 0 8px;
+    border: 1px solid #e8ecf2;
+    border-radius: 6px;
+    background: #fff;
+  }
+
+  ul {
+    position: absolute;
+    top: 105%;
+    left: 0;
+    right: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #e8ecf2;
+    background: #fff;
+    border-radius: 6px;
+    z-index: 999;
+  }
+
+  li {
+    padding: 6px 10px;
+    cursor: pointer;
+
+    &:hover {
+      background: #f5f8fb;
+    }
+  }
+}
+
+
 .title {
   font-size: 1rem;
   font-weight: 600;
@@ -62,6 +98,8 @@
     }
   }
 }
+
+
 
 .selectWrapper,
 .dateWrapper {
@@ -119,6 +157,45 @@
     font-family: var(--font-work-sans);
 }
 
+
+.panelPopover {
+  position: absolute;
+  z-index: 9999;
+  background: #fff;
+  border: 1px solid #e8ecf2;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 1.25rem;
+  width: 280px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: fadeIn 0.15s ease-out;
+  pointer-events: auto; /* Allow clicks */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//     transform: translateY(-6px);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
+
+
 @keyframes slideIn {
   from {
     transform: translateX(100%);
@@ -128,14 +205,9 @@
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+
+
+
 
 /* Responsive */
 @media (max-width: 768px) {
