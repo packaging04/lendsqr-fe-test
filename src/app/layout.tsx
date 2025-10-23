@@ -55,6 +55,27 @@ const workSans = localFont({
   variable: "--font-work-sans",
 });
 
+const SF_UI_Display_Thin = localFont({
+  src: [
+    {
+      path: "../assets/fonts/fonnts.com-SF_UI_Display_Thin.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/fonnts.com-SF_Pro_Text_Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/fonnts.com-SF_UI_Text_Regular.ttf",
+      weight: "400",
+      style: "normal",
+    }
+  ],
+  variable: "--font-sfui",
+});
+
 const roboto = localFont({
   src: [
     {
@@ -89,7 +110,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${avenirNext.variable} ${workSans.variable} ${roboto.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${avenirNext.variable} ${workSans.variable} ${roboto.variable} ${SF_UI_Display_Thin.variable}`}
     >
       <body className="font-avenir">{children}</body>
     </html>

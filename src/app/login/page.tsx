@@ -4,11 +4,25 @@ import logo from '@/assets/images/logo.svg';
 import Hero from '@/assets/images/hero.png';
 import Image from 'next/image';
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-    const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // ✅ Optional: Perform validation or API authentication here
+    // e.g., check credentials, call API, etc.
+
+    // For now, just redirect to dashboard
+    router.push("/dashboard");
+  };
 
   return (
     <main className={styles.login}>
@@ -33,18 +47,20 @@ export default function LoginPage() {
           </h1>
           <p>Enter details to login.</p>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
-              <input type="email" id="email" placeholder="Email" />
+              <input type="email" id="email" placeholder="Email" 
+                      onChange={(e) => setEmail(e.target.value)} />
             </div>
 
             <div className={styles.inputGroup}>
                 <div className={styles.passwordField}>
                     <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    placeholder="Password"
-                    aria-label="Password"
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      placeholder="Password"
+                      aria-label="Password"
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <button
                     type="button"

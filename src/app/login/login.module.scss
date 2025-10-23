@@ -99,8 +99,8 @@
         font-size: 0.875rem;
         outline: none;
         height: 3.125rem;
-        box-sizing: border-box;   // ensure padding included in width
-        width: 100%;              // full width within its container
+        box-sizing: border-box;   
+        width: 100%;
 
         &:focus {
         border-color: $primary-color;
@@ -109,19 +109,19 @@
 
   .passwordField {
     position: relative;
-    width: 100%;             // ensure wrapper is full width like the email field
+    width: 100%;            
     display: block;
 
-    // ensure input inside wrapper fills it
+    
     input {
       width: 100%;
-      padding-right: 3.75rem; // reserve space for the SHOW button (adjust if needed)
+      padding-right: 3.75rem; 
     }
 
-    // style the toggle as a button that appears inside the input
+    
     .showBtn {
       position: absolute;
-      right: 0.6rem;           // distance from input right edge
+      right: 0.6rem;
       top: 50%;
       transform: translateY(-50%);
       background: transparent;
@@ -138,7 +138,7 @@
       justify-content: center;
     }
 
-    // small touch target improvement for mobile
+   
     .showBtn:focus {
       outline-offset: 2px;
       border-radius: 4px;
@@ -172,7 +172,7 @@
     margin-top: 1rem;
     transition: background 0.2s ease;
     line-height: 100%;
-    letter-spacing: 10%;
+    letter-spacing: 1px;
     text-transform: uppercase;
 
 

@@ -3,8 +3,8 @@ import React, { useRef, useEffect } from "react";
 import styles from "./TableRow.module.scss";
 import ActionMenu from "./ActionMenu";
 import clsx from "clsx";
-import { User } from "./UserTable";
 import Image from "next/image";
+import { User } from "@/hooks/useUsers";
 
 interface TableRowProps {
   user: User;
@@ -69,19 +69,19 @@ export default function TableRow({ user, isMenuOpen, onOpenMenu, onCloseMenu }: 
             }}
             >
             <Image src="/icons/more.png" alt="More Icon" width={16} height={16} />
-            </button>
+        </button>
 
 
           {isMenuOpen && (
             <div ref={menuRef}>
-              <ActionMenu
+                <ActionMenu
+                user={user} 
                 onClose={onCloseMenu}
-                onView={() => alert(`Viewing ${user.username}`)}
                 onBlacklist={() => alert(`Blacklisted ${user.username}`)}
                 onActivate={() => alert(`Activated ${user.username}`)}
-              />
+                />
             </div>
-          )}
+            )}
         </div>
       </td>
     </tr>
