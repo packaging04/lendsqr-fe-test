@@ -82,8 +82,17 @@
   align-items: center;
 }
 
+
 .table tbody tr {
   border-top: 1px solid #f0f2f5;
+  transition: all 0.25s ease; 
+  cursor: pointer; 
+
+  &:hover {
+    background-color: #f7fbff; 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .table tbody tr td {
@@ -91,6 +100,11 @@
   font-size: 0.9rem;
   color: #4b5563;
   vertical-align: middle;
+  transition: color 0.3s ease;
+
+  tr:hover & {
+    color: #213f7d;
+  }
 }
 
 .skeletonRow td {
