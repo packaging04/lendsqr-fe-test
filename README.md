@@ -9,13 +9,13 @@ This is the submission task for the Lendsqr Frontend Engineer Assessment V2.
 Stack Used
 1. ReactJs(Next.Js Framework)
 2. TypeScript
-2. SCSS For Styling.
+3. SCSS For Styling.
 
 It was done in respect to the figma design located @
 
 https://www.figma.com/design/ZKILoCoIoy1IESdBpq3GNC/Lendsqr-Frontend-Engineering-Assessment?node-id=5530-2342&t=N3t4uOFeli5QLsKZ-0
 
-To run it, kindly locate it @ => 
+To run it, kindly locate it @ => https://adeyemi-olaoye-lendsqr-fe-test-mu.vercel.app/login
 
 
 
