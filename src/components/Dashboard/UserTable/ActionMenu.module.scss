@@ -1,3 +1,5 @@
+@use "../../../styles/variables" as *;
+
 .menu {
   position: absolute;
   top: 120%; /* below the 3 dots */
@@ -21,7 +23,7 @@
     width: 100%;
     background: transparent;
     border: none;
-    color: #213f7d;
+    color: $heading-color;
     cursor: pointer;
     text-align: left;
     transition: background 0.15s ease, border-radius 0.15s ease;
@@ -66,15 +68,16 @@
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .menu {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
-    border-radius: 16px 16px 0 0;
+    // position: fixed;
+    // bottom: 0;
+    // right: 0;
+    // left: 0;
+    // width: 100%;
+    border-radius: 8px;
+    z-index: 100;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-    margin: 0;
-    padding-bottom: 1rem;
+    // margin: 0;
+    // padding-bottom: 1rem;
     animation: slideUp 0.25s ease-out;
   }
 

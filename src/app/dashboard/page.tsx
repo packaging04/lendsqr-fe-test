@@ -3,9 +3,9 @@ import UserTable from "@/components/Dashboard/UserTable/UserTable";
 
 export default function DashboardPage() {
   return (
-    <main>
+    <div>
       <DashboardStats />
       <UserTable />
-    </main>
+    </div>
   );
 }

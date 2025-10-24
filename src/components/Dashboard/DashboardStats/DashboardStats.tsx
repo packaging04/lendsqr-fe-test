@@ -31,13 +31,13 @@ const stats = [
 
 export default function DashboardStats() {
   return (
-    <section className={styles.dashboardStats}>
+    <div className={styles.dashboardStats}>
       <h2 className={styles.title}>Users</h2>
       <div className={styles.cardsGrid}>
         {stats.map((s, i) => (
           <StatsCard key={i} {...s} />
         ))}
       </div>
-    </section>
+    </div>
   );
 }

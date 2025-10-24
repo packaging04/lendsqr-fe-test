@@ -62,7 +62,7 @@
 .title {
   font-size: 1rem;
   font-weight: 600;
-  color: #213f7d;
+  color: $heading-color;
   margin-bottom: 1rem;
 }
 
@@ -73,7 +73,7 @@
 
   label {
     font-size: 0.875rem;
-    color: #545f7d;
+    color: $text-color;
     margin-bottom: 0.4rem;
   }
 
@@ -84,13 +84,13 @@
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     outline: none;
-    color: #213f7d;
+    color: $heading-color;
     width: 100%;
     background: #fff;
     transition: border-color 0.2s ease;
 
     &:focus {
-      border-color: #39cdcc;
+      border-color: $primary-color;
     }
 
     &::placeholder {
@@ -110,7 +110,7 @@
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #545f7d;
+    color: $text-color;
     pointer-events: none;
   }
 }
@@ -132,7 +132,7 @@
   .resetBtn {
     border: 1px solid #dcdfe3;
     background: #fff;
-    color: #213f7d;
+    color: $heading-color;
     margin-right: 0.75rem;
 
     &:hover {
@@ -141,7 +141,7 @@
   }
 
   .filterBtn {
-    background: #39cdcc;
+    background: $primary-color;
     border: none;
     color: #fff;
 

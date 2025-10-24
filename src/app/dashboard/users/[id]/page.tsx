@@ -114,7 +114,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
 
       {/* === Tab Content (General Details only for now) === */}
       <div className={styles.tabContent}>
-        <section className={styles.infoSection}>
+        <div className={styles.infoSection}>
           <h4 className={styles.title} >Personal Information</h4>
           <div className={styles.infoGrid}>
             <div>
@@ -150,8 +150,8 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
               <p className={styles.value}>{user.profileDetails.residence}</p>
             </div>
           </div>
-        </section>
-        <section className={styles.infoSection}>
+        </div>
+        <div className={styles.infoSection}>
           <h4 className={styles.title} >Education and Employment</h4>
           <div className={styles.infoGrid2}>
             <div>
@@ -183,8 +183,8 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
               <p className={styles.value}>{user.education.loanRepayment}</p>
             </div>
           </div>
-        </section>
-        <section className={styles.infoSection}>
+        </div>
+        <div className={styles.infoSection}>
           <h4 className={styles.title}>Socials</h4>
           <div className={styles.infoGrid}>
             <div>
@@ -200,8 +200,8 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
               <p className={styles.value}>{user.socials.instagram}</p>
             </div>
           </div>
-        </section>
-        <section className={styles.infoSection}>
+        </div>
+        <div className={styles.infoSection}>
           <h4 className={styles.title}>Guarantor</h4>
           <div className={styles.infoGrid}>
             <div>
@@ -221,8 +221,8 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
               <p className={styles.value}>{user.guarantor.relationship}</p>
             </div>
           </div>
-        </section>
-         <section className={styles.infoSection}>
+        </div>
+         <div className={styles.infoSection}>
           <h4 className={styles.title}>&nbsp;</h4>
           <div className={styles.infoGrid}>
             <div>
@@ -242,7 +242,7 @@ export default function UserDetailsPage({ params }: { params: { id: string } }) 
               <p className={styles.value}>{user.guarantor.relationship}</p>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

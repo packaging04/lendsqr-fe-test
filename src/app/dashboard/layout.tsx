@@ -19,7 +19,7 @@ export default function DashboardLayout({
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
         />
-        <main className={styles.content}>{children}</main>
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   );

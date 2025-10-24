@@ -25,8 +25,8 @@ export default function LoginPage() {
   };
 
   return (
-    <main className={styles.login}>
-      <section className={styles.leftPane}>
+    <div className={styles.login}>
+      <div className={styles.leftPane}>
         <Image
           src={logo}
           alt="Lendsqr logo"
@@ -38,9 +38,9 @@ export default function LoginPage() {
           alt="Illustration"
           priority
         />
-      </section>
+      </div>
 
-      <section className={styles.rightPane}>
+      <div className={styles.rightPane}>
         <div className={styles.formContainer}>
           <h1>
             <span>Welcome!</span>
@@ -83,7 +83,7 @@ export default function LoginPage() {
             </button>
           </form>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }

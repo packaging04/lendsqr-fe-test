@@ -1,8 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import styles from "./Sidebar.module.scss";
+import { PanelLeft } from "lucide-react";
+import { redirect } from "next/navigation";
 
 type SidebarProps = {
   isOpen?: boolean;
@@ -11,6 +13,46 @@ type SidebarProps = {
 
 export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const [activeItem, setActiveItem] = useState("users");
+
+  const [open, setOpen] = useState<boolean>(isOpen);
+
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
+
+  // Will close when clicking outside on mobile (only active when open)
+  useEffect(() => {
+    if (!open) return;
+
+    function handleClickOutside(e: MouseEvent) {
+      const sidebar = document.getElementById("app-sidebar");
+      const toggleBtn = document.getElementById("sidebarToggleBtn");
+      if (
+        sidebar &&
+        !sidebar.contains(e.target as Node) &&
+        toggleBtn &&
+        !toggleBtn.contains(e.target as Node)
+      ) {
+        setOpen(false);
+        if (onClose) onClose();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open, onClose]);
+
+  const toggleSidebar = () => {
+    setOpen((prev) => {
+      const next = !prev;
+      if (!next && onClose) {
+        // if closing, notify parent (non-invasive)
+        onClose();
+      }
+      return next;
+    });
+  };
+
   const menuItems = [
     {
       label: "Switch Organization",
@@ -80,7 +122,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       id: "karma",
       width: 16,
       height: 12.8,
-    }
+    },
   ];
 
   const businessItems = [
@@ -146,11 +188,10 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       id: "reports",
       width: 16,
       height: 16,
-    }
-    
+    },
   ];
 
-   const settingsItems = [
+  const settingsItems = [
     {
       label: "Preferences",
       icon: "/icons/preferences.png",
@@ -171,102 +212,154 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       id: "auditlogs",
       width: 16,
       height: 21.33,
+    },
+    {
+      label: "System Messages",
+      icon: "/icons/settings.png",
+      id: "systemImage",
+      width: 16,
+      height: 16,
+    },
+  ];
+
+  const signoutItems = [
+    {
+      label: "Logout",
+      icon: "/icons/signout.png",
+      id: "logout",
+      width: 16,
+      height: 16,
     }
   ];
 
 
   return (
-    <aside
-      className={clsx(styles.sidebar, isOpen && styles.open)}
-      aria-label="Sidebar"
-    >
-      
+    <>
+      <button
+        id="sidebarToggleBtn"
+        className={styles.sidebarToggle}
+        onClick={toggleSidebar}
+        aria-label={open ? "Close sidebar" : "Open sidebar"}
+      >
+        {/* <Image src="/icons/settings.png" alt="Toggle Sidebar" width={22} height={22} /> */}
+        <PanelLeft />
+      </button>
 
-      <nav>
-        <div className={styles.topMenu}>
-          {menuItems.map(item => (
+      <aside
+        id="app-sidebar"
+        className={clsx(styles.sidebar, (isOpen || open) && styles.open)}
+        aria-label="Sidebar"
+      >
+         <nav>
+          <div className={styles.topMenu}>
+            {menuItems.map((item) => (
+              <div
+                key={item.id}
+                className={clsx(styles.navItem, { [styles.active]: activeItem === item.id })}
+                onClick={() => setActiveItem(item.id)}
+              >
+                <Image src={item.icon} alt={item.label} width={16} height={16} />
+                <span className={styles.word}>{item.label}</span>
+                {item.id === "org" && (
+                  <Image
+                    src="/icons/drop.png"
+                    alt="Dropdown arrow"
+                    width={14}
+                    height={14}
+                    className={styles.dropdownIcon}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+
+          <p className={styles.sectionLabel}>CUSTOMERS</p>
+          {customerItems.map((item) => (
             <div
               key={item.id}
-              className={clsx(styles.navItem, { [styles.active]: activeItem === item.id })}
+              className={clsx(styles.navItem, {
+                [styles.active]: activeItem === item.id,
+              })}
               onClick={() => setActiveItem(item.id)}
             >
-              <Image src={item.icon} alt={item.label} width={16} height={16} />
-              <span className={styles.word}>{item.label}</span>
-              {item.id === "org" && (
-                <Image
-                  src="/icons/drop.png"
-                  alt="Dropdown arrow"
-                  width={14}
-                  height={14}
-                  className={styles.dropdownIcon}
-                />
-              )}
+              <Image
+                src={item.icon}
+                alt={item.label}
+                width={item.width}
+                height={item.height}
+                className={styles.icon}
+              />
+              <span>{item.label}</span>
             </div>
           ))}
-        </div>
 
-        <p className={styles.sectionLabel}>CUSTOMERS</p>
-        {customerItems.map((item) => (
-          <div
-            key={item.id}
-            className={clsx(styles.navItem, {
-              [styles.active]: activeItem === item.id,
-            })}
-            onClick={() => setActiveItem(item.id)}
-          >
-            <Image
-              src={item.icon}
-              alt={item.label}
-              width={item.width}
-              height={item.height}
-              className={styles.icon}
-            />
-            <span>{item.label}</span>
-          </div>
-        ))}
-        
-        <p className={styles.sectionLabel}>BUSINESSES</p>
-        {businessItems.map((item) => (
-          <div
-            key={item.id}
-            className={clsx(styles.navItem, {
-              [styles.active]: activeItem === item.id,
-            })}
-            onClick={() => setActiveItem(item.id)}
-          >
-            <Image
-              src={item.icon}
-              alt={item.label}
-              width={item.width}
-              height={item.height}
-              className={styles.icon}
-            />
-            <span>{item.label}</span>
-          </div>
-        ))}
+          <p className={styles.sectionLabel}>BUSINESSES</p>
+          {businessItems.map((item) => (
+            <div
+              key={item.id}
+              className={clsx(styles.navItem, {
+                [styles.active]: activeItem === item.id,
+              })}
+              onClick={() => setActiveItem(item.id)}
+            >
+              <Image
+                src={item.icon}
+                alt={item.label}
+                width={item.width}
+                height={item.height}
+                className={styles.icon}
+              />
+              <span>{item.label}</span>
+            </div>
+          ))}
 
-        <p className={styles.sectionLabel}>SETTINGS</p>
+          <p className={styles.sectionLabel}>SETTINGS</p>
 
           {settingsItems.map((item) => (
-          <div
-            key={item.id}
-            className={clsx(styles.navItem, {
-              [styles.active]: activeItem === item.id,
-            })}
-            onClick={() => setActiveItem(item.id)}
-          >
-            <Image
-              src={item.icon}
-              alt={item.label}
-              width={item.width}
-              height={item.height}
-              className={styles.icon}
-            />
-            <span>{item.label}</span>
-          </div>
-        ))}
-        
-      </nav>
-    </aside>
+            <div
+              key={item.id}
+              className={clsx(styles.navItem, {
+                [styles.active]: activeItem === item.id,
+              })}
+              onClick={() => setActiveItem(item.id)}
+            >
+              <Image
+                src={item.icon}
+                alt={item.label}
+                width={item.width}
+                height={item.height}
+                className={styles.icon}
+              />
+              <span>{item.label}</span>
+            </div>
+          ))}
+
+          <span className={styles.hrm}></span>
+
+          {signoutItems.map((item) => (
+            <div
+              key={item.id}
+              className={clsx(styles.navItem, {
+                [styles.active]: activeItem === item.id,
+              })}
+              onClick={() => redirect("/login")}
+            >
+              <Image
+                src={item.icon}
+                alt={item.label}
+                width={item.width}
+                height={item.height}
+                className={styles.icon}
+              />
+              <span className={styles.cologout}>{item.label}</span>
+            </div>
+          ))}
+
+          <span className={styles.v2}>v1.2.0</span>
+
+          
+        </nav>
+      </aside>
+    </>
   );
 }

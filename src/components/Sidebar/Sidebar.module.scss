@@ -1,3 +1,5 @@
+@use "@/styles/variables" as *;
+
 .sidebar {
   background: #fff;
   display: flex;
@@ -59,7 +61,7 @@
 .sectionLabel {
   font-size: 0.75rem;
   font-weight: 500;
-  color: #545f7d;
+  color: $text-color;
   margin: 1rem 2rem 0.5rem;
 }
 
@@ -67,7 +69,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #545f7d;
+  color: $text-color;
   font-size: 1rem;
   font-weight: 400;
   padding: 0.75rem 1.875rem;
@@ -83,7 +85,7 @@
 
   &:hover {
     background-color: rgba(57, 205, 204, 0.1);
-    color: #213f7d;
+    color: $heading-color;
     opacity: 1;
     transform: translateX(4px); /* slightly slide to the right on mouse over*/
   }
@@ -110,6 +112,28 @@
   }
 }
 
+.hrm {
+  border: none;
+  height: 1px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  background-color: #e5e7eb; /* light gray */
+  color: $heading-color;
+  margin: 1.5rem 0;
+}
+
+.cologout {
+  color: $heading-color !important;
+}
+
+.v2 {
+  color: $heading-color !important;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+  font-size: 12px;
+  font-weight: 400;
+  font-family: var(--font-work-sans);
+}
 
 .navItem:first-child {
   opacity: 1;
@@ -130,7 +154,7 @@
 }
 
 .active {
-  color: #213f7d;
+  color: $heading-color;
   background-color: rgba(57, 205, 204, 0.08);
   font-weight: 400;
   font-size: 16px;
@@ -144,6 +168,43 @@
     top: 0;
     width: 3px;
     height: 100%;
-    background-color: #39cdcc;
+    background-color: $primary-color;
+  }
+}
+
+/* this is for Mobile Sidebar Togle */
+.sidebarToggle {
+  display: none;
+  position: fixed;
+  bottom: 3.4rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  z-index: 100;
+  cursor: pointer;
+
+  img {
+    filter: brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(300%) hue-rotate(130deg);
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
+
+/* For MOBILE SIDEBAR BEHAVIOR */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 260px;
+    background: #fff;
+    transition: left 0.3s ease-in-out;
+  }
+
+  .sidebar.open {
+    left: 0;
   }
 }
