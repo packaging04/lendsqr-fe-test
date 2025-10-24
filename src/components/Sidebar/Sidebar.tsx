@@ -4,7 +4,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import styles from "./Sidebar.module.scss";
 import { PanelLeft } from "lucide-react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 type SidebarProps = {
   isOpen?: boolean;
@@ -13,7 +13,7 @@ type SidebarProps = {
 
 export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const [activeItem, setActiveItem] = useState("users");
-
+  const router = useRouter();
   const [open, setOpen] = useState<boolean>(isOpen);
 
   useEffect(() => {
@@ -52,6 +52,12 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       return next;
     });
   };
+
+  const handleMenuClick = (id: string) => {
+    setActiveItem(id); 
+    router.push("/dashboard"); // navigate to dashboard
+  };
+
 
   const menuItems = [
     {
@@ -240,8 +246,8 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         className={styles.sidebarToggle}
         onClick={toggleSidebar}
         aria-label={open ? "Close sidebar" : "Open sidebar"}
+        
       >
-        {/* <Image src="/icons/settings.png" alt="Toggle Sidebar" width={22} height={22} /> */}
         <PanelLeft />
       </button>
 
@@ -256,7 +262,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               <div
                 key={item.id}
                 className={clsx(styles.navItem, { [styles.active]: activeItem === item.id })}
-                onClick={() => setActiveItem(item.id)}
+                onClick={() => handleMenuClick}
               >
                 <Image src={item.icon} alt={item.label} width={16} height={16} />
                 <span className={styles.word}>{item.label}</span>

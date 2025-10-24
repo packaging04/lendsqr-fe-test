@@ -1,21 +1,74 @@
-.dashboardStats {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  padding: 2.2rem 1.3rem 0;
-  font-family: var(--font-work-sans);
+@use "../../../styles/variables" as *;
 
-  .title {
-    color: #213f7d;
-    font-size: 1.5rem;
-    font-weight: 500;
-    font-family: var(--font-work-sans);
-    margin-top: 16px;
-  }
+.dashboardStats { 
+  // display: flex;
+  // flex-direction: column;
+  // gap: 1.5rem; 
+  // width: 100%; 
+  font-family: var(--font-work-sans); 
+  padding-left: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 30px;
+ 
+  .title { 
+    color: $heading-color; 
+    font-size: 1.5rem; 
+    font-weight: 500; 
+    font-family: var(--font-work-sans); 
+    margin-top: 16px; 
+    padding-left: 0.5rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  } 
+ 
+  .cardsGrid { 
+    display: grid;
+    gap: 1.5rem;
+    width: 100%;
+    
+    /* Default: show 4 cards (desktop) */ 
+    grid-template-columns: repeat(4, 1fr); 
+    padding: 0.5rem;
 
-  .cardsGrid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
+     @media (min-width: 992px) and (max-width: 1050px) {
+      /* Tablet: show 2 cards */ 
+      grid-template-columns: repeat(2, 1fr); 
+      width: 100%;
+      max-width: 75%;
+      padding: 0.8rem;
+    }
+
+    @media (min-width: 900px) and (max-width: 991px) {
+      /* Tablet: show 2 cards */ 
+      grid-template-columns: repeat(2, 1fr); 
+      width: 100%;
+      max-width: 70%;
+      padding: 0.8rem;
+    } 
+   
+    @media (min-width: 800px) and (max-width: 900px) {
+      /* Tablet: show 2 cards */ 
+      grid-template-columns: repeat(2, 1fr); 
+      width: 100%;
+      max-width: 65%;
+      padding: 0.8rem;
+    } 
+
+    @media (min-width: 768px) and (max-width: 800px) {
+      /* Tablet: show 2 cards */ 
+      grid-template-columns: repeat(2, 1fr); 
+      width: 100%;
+      max-width: 60%;
+      padding: 0.7rem;
+    } 
+   
+    @media (max-width: 768px) { 
+      /* Mobile: show 1 card */ 
+      grid-template-columns: 1fr; 
+      justify-content: center;
+      width: 100%;
+      max-width: 100%;
+    }
+  } 
 }

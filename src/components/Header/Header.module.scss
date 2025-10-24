@@ -35,10 +35,6 @@
     border: none;
     cursor: pointer;
     color: $text-color;
-
-    @include responsive(md) {
-      display: block;
-    }
   }
 
   .searchBar {
@@ -59,7 +55,7 @@
       outline: none;
       font-size: 0.875rem;
       width: 300px;
-      color: #545f7d;
+      color: $text-color;
       font-family: var(--font-work-sans);
 
       &::placeholder {
@@ -68,7 +64,7 @@
     }
 
     svg {
-      background: #39cdcc;
+      background: $primary-color;
       border-radius: 4px;
       padding: 0.4rem;
       color: white;
@@ -82,7 +78,7 @@
   }
 
   .searchButton {
-    background: #39cdcc;
+    background: $primary-color;
     border: none;
     padding: 0.8rem;
     width: 56px;
@@ -106,7 +102,7 @@
   }
 
   .docs {
-    color: #213f7d;
+    color: $heading-color;
     text-decoration: underline;
     font-weight: 400;
     font-size: 1rem;
@@ -149,21 +145,182 @@
 
     .username {
       font-weight: 500;
-      color: #213f7d;
+      color: $heading-color;
       font-size: 1rem;
       font-family: var(--font-work-sans);
-
-      @include responsive(md) {
-        display: none;
-      }
     }
 
     .dropdownIcon {
       margin-left: 0.25rem;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  /*  Dropdown Menu for Mobil */
+.dropdownMenu {
+  display: none;
+}
+
+  /* Only visible when hamburger is toggled (mobile/tablet) */
+  @media (max-width: 992px) {
+    .dropdownMenu {
+      position: absolute;
+      top: 70px; /* below header */
+      right: 1rem;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      width: 200px;
+      z-index: 200;
+      animation: fadeIn 0.25s ease;
+
+      a,
+      button {
+        background: none;
+        border: none;
+        color: $heading-color;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+
+      .profileMobile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        img {
+          border-radius: 50%;
+        }
+
+        .username {
+          font-weight: 500;
+          color: $heading-color;
+          font-size: 0.95rem;
+        }
+      }
     }
 
-    .dropdownIcon:hover {
-      transform: scale(1.2);
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+  }
+
+  @media (max-width: 600px) and (min-width: 481px) {
+    height: 80px;
+    padding: 0 1.5rem;
+
+    .docs,
+    .notificationProfile,
+    .profile {
+      display: none;
+    }
+
+    .menuBtn {
+      display: flex;
+      font-size: 1.75rem;
+    }
+
+    .logo img {
+      width: 120px;
+      height: auto;
+    }
+
+    /* Center elements horizontally */
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+
+    .searchBar {
+      margin: 0 auto;
+      width: 70%;
+      max-width: 400px;
+
+       input {
+        width: 130px;
+       }
+    }
+  }
+
+  @media (max-width: 992px) and (min-width: 601px) {
+    height: 80px;
+    padding: 0 1.5rem;
+
+    .docs,
+    .notificationProfile,
+    .profile {
+      display: none;
+    }
+
+    .menuBtn {
+      display: flex;
+      font-size: 1.75rem;
+    }
+
+    .logo img {
+      width: 120px;
+      height: auto;
+    }
+
+    /* Center elements horizontally */
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+
+    .searchBar {
+      margin: 0 auto;
+      width: 70%;
+      max-width: 400px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    height: 65px;
+    padding: 0 1rem;
+
+    /* Only logo & hamburger visible */
+    .searchBar,
+    .docs,
+    .notificationProfile,
+    .profile {
+      display: none;
+    }
+
+    .menuBtn {
+      display: flex;
+      font-size: 1.6rem;
+    }
+
+    .logo img {
+      width: 100px;
+      height: auto;
+    }
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
